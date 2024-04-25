@@ -2,12 +2,12 @@ namespace KataPotter.Domain;
 
 public interface IBookOrganiser
 {
-    List<Set> GetBooksSets(int[] books);
+    IEnumerable<Set> GetBooksSets(int[] books);
 }
 
 public class BookOrganiser : IBookOrganiser
 {
-    public List<Set> GetBooksSets(int[] books)
+    public IEnumerable<Set> GetBooksSets(int[] books)
     {
         var bookSets = new List<Set>
         {
