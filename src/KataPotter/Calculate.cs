@@ -8,7 +8,7 @@ public static class Calculate
     {
         if (books.Length == 0) return 0;
         
-        var smallestSetsPrice = SmallestSetPrice(books);
+        var smallestSetsPrice = SmallestSetsPrice(books);
         var biggestSetsPrice = BiggestSetsPrice(books);
         
         var total = Math.Min(smallestSetsPrice, biggestSetsPrice);
@@ -16,7 +16,7 @@ public static class Calculate
         return Math.Round(total, 2);
     }
     
-    private static double SmallestSetPrice(IEnumerable<int> books)
+    private static double SmallestSetsPrice(IEnumerable<int> books)
     {
         var bookGroups = BooksSets(books);
         var total = 0f;
