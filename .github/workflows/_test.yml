@@ -1,0 +1,19 @@
+name: _test
+
+on:
+  workflow_call:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 6.x
+        uses: actions/setup-dotnet@v3
+        with:
+          # Semantic version range syntax or exact version of a dotnet version
+          dotnet-version: "8.x"
+
+      - name: Test
+        run: dotnet test
