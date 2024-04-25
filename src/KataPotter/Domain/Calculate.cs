@@ -6,13 +6,13 @@ public class Calculate(IDiscount discount, IBookOrganiser bookOrganiser) : ICalc
 {
     private const decimal BasePrice = 8;
     
-    public decimal TotalBooksPrice(IEnumerable<Book> rawBooks)
+    public decimal TotalBooksPrice(IEnumerable<Book> books)
     {
-        var books = rawBooks.Select(BookId).ToArray();
+        var bookIds = books.Select(BookId).ToArray();
         
-        if (books.Length == 0) return 0;
+        if (bookIds.Length == 0) return 0;
         
-        var allBookSets = bookOrganiser.GetBooksSets(books);
+        var allBookSets = bookOrganiser.GetBooksSets(bookIds);
 
         var total = GetOptimalPrice(allBookSets);
         
