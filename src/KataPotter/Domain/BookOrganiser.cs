@@ -2,14 +2,14 @@ namespace KataPotter.Domain;
 
 public interface IBookOrganiser
 {
-    List<List<HashSet<int>>> GetBooksSets(int[] books);
+    List<Set> GetBooksSets(int[] books);
 }
 
 public class BookOrganiser : IBookOrganiser
 {
-    public List<List<HashSet<int>>> GetBooksSets(int[] books)
+    public List<Set> GetBooksSets(int[] books)
     {
-        var bookSets = new List<List<HashSet<int>>>
+        var bookSets = new List<Set>
         {
             GetBooksSets(books, SetType.Smallest),
             GetBooksSets(books, SetType.Biggest),
@@ -18,21 +18,21 @@ public class BookOrganiser : IBookOrganiser
         return bookSets;
     }
     
-    private static List<HashSet<int>> GetBooksSets(IEnumerable<int> books, SetType setType)
+    private static Set GetBooksSets(IEnumerable<int> books, SetType setType)
     {
-        var bookSets = new List<HashSet<int>>{ new() };
+        var bookSets = new Set();
         
         foreach (var book in books)
         {
-            if (bookSets.TrueForAll(bookSet => bookSet.Contains(book)))
+            if (bookSets.Items.TrueForAll(bookSet => bookSet.Contains(book)))
             {
-                bookSets.Add([book]);
+                bookSets.Items.Add([book]);
             }
             else
             {
-                if(setType == SetType.Biggest) bookSets.Sort(CrescentOrder());
+                if(setType == SetType.Biggest) bookSets.Items.Sort(CrescentOrder());
                 
-                bookSets.First(set => !set.Contains(book)).Add(book);
+                bookSets.Items.First(set => !set.Contains(book)).Add(book);
             }
         }
 
