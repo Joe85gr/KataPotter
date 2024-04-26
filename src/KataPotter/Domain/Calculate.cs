@@ -8,21 +8,29 @@ public class Calculate(IDiscount discount, IBookOrganiser bookOrganiser) : ICalc
     
     public decimal TotalBooksPrice(IEnumerable<Book> books)
     {
-        var bookIds = books.Select(BookId).ToArray();
+        var bookIds = ExtractBookIds(books);
         
         if (bookIds.Length == 0) return 0;
         
-        var allBookSets = bookOrganiser.GetBooksSets(bookIds);
+        var booksSets = bookOrganiser.GetBooksSets(bookIds);
 
-        var total = GetOptimalPrice(allBookSets);
+        var total = GetOptimalPrice(booksSets);
         
         return total;
     }
 
-    private static int BookId(Book book) => (int)book;
+    private static int[] ExtractBookIds(IEnumerable<Book> books) => 
+        books.Select(BookId).ToArray();
+
+    private static int BookId(Book book) => 
+        (int)book;
     
-    private decimal GetOptimalPrice(IEnumerable<Set> allBookSets) => allBookSets.Min(GetSetTotalPrice);
+    private decimal GetOptimalPrice(IEnumerable<Set> bookSets) => 
+        bookSets.Min(GetCurrentSetTotalPrice);
     
-    private decimal GetSetTotalPrice(Set set) => 
-        set.Items.Sum(items => items.Count * BasePrice * (decimal)discount.Get(items.Count));
+    private decimal GetCurrentSetTotalPrice(Set set) => 
+        set.Collections.Sum(GetCollectionPrice);
+
+    private decimal GetCollectionPrice(HashSet<int> collection) =>
+        collection.Count * BasePrice * (decimal)discount.Get(collection.Count);
 }
