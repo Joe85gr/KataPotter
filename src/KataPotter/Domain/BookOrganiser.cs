@@ -1,10 +1,5 @@
 namespace KataPotter.Domain;
 
-public interface IBookOrganiser
-{
-    IEnumerable<Set> GetBooksSets(int[] books);
-}
-
 public class BookOrganiser : IBookOrganiser
 {
     public IEnumerable<Set> GetBooksSets(int[] books)
@@ -29,21 +24,19 @@ public class BookOrganiser : IBookOrganiser
 
     private static void AddBookToSet(SetType setType, Set bookSets, int book)
     {
-        if (AllCollectionsContainThisBook(bookSets.Collections, book))
+        if (BookIsInAllCollections(bookSets.Collections, book))
         {
-            bookSets.Collections.Add([book]);
+            bookSets.Collections.Add([]);
         }
-        else
-        {
-            SortSets(setType, bookSets);
+        
+        SortSets(setType, bookSets);
 
-            bookSets.Collections
-                .First(collection => !collection.Contains(book))
-                .Add(book);
-        }
+        bookSets.Collections
+            .First(collection => !collection.Contains(book))
+            .Add(book);
     }
     
-    private static bool AllCollectionsContainThisBook(List<HashSet<int>> collections, int book) => 
+    private static bool BookIsInAllCollections(List<HashSet<int>> collections, int book) => 
         collections.TrueForAll(bookSet => bookSet.Contains(book));
 
     private static void SortSets(SetType setType, Set bookSets)

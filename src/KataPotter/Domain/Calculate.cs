@@ -10,8 +10,6 @@ public class Calculate(IDiscount discount, IBookOrganiser bookOrganiser) : ICalc
     {
         var bookIds = ExtractBookIds(books);
         
-        if (bookIds.Length == 0) return 0;
-        
         var booksSets = bookOrganiser.GetBooksSets(bookIds);
 
         var total = GetOptimalPrice(booksSets);
