@@ -2,5 +2,5 @@ namespace KataPotter.Domain;
 
 public interface IBookOrganiser
 {
-    IEnumerable<Set> GetBooksSets(int[] books);
+    IEnumerable<Set> GetSets(int[] books);
 }

@@ -2,29 +2,29 @@ namespace KataPotter.Domain;
 
 public class BookOrganiser : IBookOrganiser
 {
-    public IEnumerable<Set> GetBooksSets(int[] books)
+    public IEnumerable<Set> GetSets(int[] books)
     {
         var setTypes = GetSetTypes();
         
-        var bookSets = setTypes.Select(setType => GetBooksSets(books, setType));
+        var bookSets = setTypes.Select(setType => GetSets(books, setType));
         
         return bookSets;
     }
 
     private static IEnumerable<SetType> GetSetTypes() => Enum.GetValues(typeof(SetType)).Cast<SetType>();
 
-    private static Set GetBooksSets(IEnumerable<int> books, SetType setType)
+    private static Set GetSets(IEnumerable<int> books, SetType setType)
     {
         var bookSets = new Set();
 
-        foreach (var book in books) AddBookToSet(setType, bookSets, book);
+        foreach (var book in books) AddToSet(setType, bookSets, book);
 
         return bookSets;
     }
 
-    private static void AddBookToSet(SetType setType, Set bookSets, int book)
+    private static void AddToSet(SetType setType, Set bookSets, int book)
     {
-        if (BookIsInAllCollections(bookSets.Collections, book))
+        if (IsInAllCollections(bookSets.Collections, book))
         {
             bookSets.Collections.Add([]);
         }
@@ -36,7 +36,7 @@ public class BookOrganiser : IBookOrganiser
             .Add(book);
     }
     
-    private static bool BookIsInAllCollections(List<HashSet<int>> collections, int book) => 
+    private static bool IsInAllCollections(List<HashSet<int>> collections, int book) => 
         collections.TrueForAll(bookSet => bookSet.Contains(book));
 
     private static void SortSets(SetType setType, Set bookSets)

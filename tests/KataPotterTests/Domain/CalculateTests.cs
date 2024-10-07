@@ -83,7 +83,7 @@ public class CalculateTests
     private void AssertTest(IEnumerable<Book> books, decimal expected)
     {
         // Act
-        var result = _sut.TotalBooksPrice(books);
+        var result = _sut.TotalPrice(books);
         
         // Assert
         Assert.Equal(expected, result);

@@ -2,5 +2,5 @@ namespace KataPotter.Domain;
 
 public interface ICalculate
 {
-    decimal TotalBooksPrice(IEnumerable<Book> rawBooks);
+    decimal TotalPrice(IEnumerable<Book> rawBooks);
 }
