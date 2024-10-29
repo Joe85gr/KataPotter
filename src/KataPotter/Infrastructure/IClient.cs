@@ -1,6 +1,6 @@
 namespace KataPotter.Infrastructure;
 
-public interface IDiscount
+public interface IClient
 {
     float Get(int book);
 }
