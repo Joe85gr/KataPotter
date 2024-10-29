@@ -2,15 +2,15 @@
 
 namespace KataPotter.Domain;
 
-public class Calculate(IDiscount discount, IBookOrganiser bookOrganiser) : ICalculate
+public class Price(IClient client) : IPrice
 {
     private const decimal BasePrice = 8;
     
-    public decimal TotalPrice(IEnumerable<Book> books)
+    public decimal GetTotal(IEnumerable<Book> books)
     {
         var bookIds = ExtractBookIds(books);
         
-        var booksSets = bookOrganiser.GetSets(bookIds);
+        var booksSets = BookOrganiser.GetSets(bookIds);
 
         var total = GetOptimalPrice(booksSets);
         
@@ -30,5 +30,5 @@ public class Calculate(IDiscount discount, IBookOrganiser bookOrganiser) : ICalc
         set.Collections.Sum(GetCollectionPrice);
 
     private decimal GetCollectionPrice(HashSet<int> collection) =>
-        collection.Count * BasePrice * (decimal)discount.Get(collection.Count);
+        collection.Count * BasePrice * (decimal)client.Get(collection.Count);
 }

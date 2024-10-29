@@ -1,6 +1,6 @@
 namespace KataPotter.Infrastructure;
 
-public class Discount : IDiscount
+public class InMemoryClient : IClient
 {
     public float Get(int book) => book switch
     {

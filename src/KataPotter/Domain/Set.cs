@@ -1,6 +1,12 @@
 namespace KataPotter.Domain;
 
-public class Set
+public record Set(List<HashSet<int>> Collections);
+
+public static class SetExtensions
 {
-    public List<HashSet<int>> Collections { get; set; } = [];
+    public static void SortCrescent(this Set set) => 
+        set.Collections.Sort(CrescentOrder);
+    
+    private static int CrescentOrder(HashSet<int> a, HashSet<int> b) => 
+        a.Count - b.Count;
 }
